@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/26 17:21:05 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/16 04:37:38 by cababou          ###   ########.fr       */
+/*   Updated: 2018/02/26 03:51:08 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ int					ft_strequ(char const *s1, char const *s2);
 
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 
-char				*ft_strsub(char const *s, unsigned int start, size_t len);
+char				*ft_strsub(char const *s, size_t t, size_t l, size_t f);
 
-char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin(char const *s1, char const *s2, size_t freelv);
 
 char				*ft_strrev(char const *s1);
 
@@ -123,6 +123,8 @@ void				ft_putendl_fd(char const *s, int fd);
 
 void				ft_putnbr_fd(int n, int fd);
 
+char				*ft_strsubuntilchar(char const *s, size_t start, char end);
+
 typedef struct		s_list
 {
 	void			*content;
@@ -134,20 +136,38 @@ typedef struct		s_list
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
 
-t_list				**ft_lstgetfirst(t_list **lst);
+t_list				*ft_lstgetfirst(t_list *lst);
 
-t_list				**ft_lstgetlast(t_list **lst);
+t_list				*ft_lstgetlast(t_list *lst);
 
-void				ft_lstadd(t_list **listelement, t_list *newelement);
+void				ft_lstadd(t_list *listelement, t_list *newelement);
 
 void				ft_lstdelone(t_list *elementlist);
 
-void				ft_lstdel(t_list **lst);
+void				ft_lstdel(t_list *lst);
 
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
-void				*ft_lstget(size_t index, t_list *anyelement);
+t_list				*ft_lstget(size_t index, t_list *anyelement);
 
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+
+void				ft_lstswap(t_list *anyelement, int index1, int index2);
+
+typedef struct		s_lstcontainer
+{
+	t_list			*(*add)(struct s_lstcontainer *lstc, void *cont, size_t s);
+	void			(*remove)(t_list *element);
+	int				(*size)(struct s_lstcontainer *list_container);
+	t_list			*firstelement;
+}					t_lstcontainer;
+
+t_list				*lstcontainer_add(t_lstcontainer *cont, void *c, size_t s);
+
+void				lstcontainer_remove(t_list *element);
+
+int					lstcontainer_size(t_lstcontainer *list_container);
+
+t_lstcontainer		*lstcontainer_new(void);
 
 #endif

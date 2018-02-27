@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 22:00:07 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/16 06:47:44 by cababou          ###   ########.fr       */
+/*   Updated: 2018/02/26 04:24:53 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ typedef struct	s_point
 	int			z;
 }				t_point;
 
+typedef struct	s_loop_params
+{
+	void		*mlx;
+	t_window	*fdf_window;
+}				t_loop_params;
+
+int				loop(t_loop_params *loop_params);
+
 void			exit_program(int errortype);
 
 void			*init_graphics(void);
@@ -50,6 +58,8 @@ void			fill_window(void *mlx, t_window *window, int color);
 
 char			*read_file(char *filepath);
 
-t_list			*parse_file(char *filepath);
+t_lstcontainer	*parse_file(char *filepath);
+
+t_point			*new_point(int x, int y, int z);
 
 #endif

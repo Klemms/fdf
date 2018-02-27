@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/09 21:49:18 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/26 03:35:51 by cababou          ###   ########.fr       */
+/*   Created: 2018/02/26 04:22:34 by cababou           #+#    #+#             */
+/*   Updated: 2018/02/26 04:25:11 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_point	*new_point(int x, int y, int z)
+int		loop(t_loop_params *loop_params)
 {
-	t_point	*point;
-
-	point = malloc(sizeof(t_point));
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	return (point);
+	return (0);
 }

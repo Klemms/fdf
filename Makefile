@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 22:06:43 by cababou           #+#    #+#              #
-#    Updated: 2018/02/16 06:22:38 by cababou          ###   ########.fr        #
+#    Updated: 2018/02/26 04:32:05 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRC_C = fdf.c \
 		graphics.c \
 		create.c \
 		util.c \
-		parser.c
+		parser.c \
+		loop.c \
+		color.c
 
 SRC_O = fdf.o \
 		graphinit.o \
@@ -26,7 +28,9 @@ SRC_O = fdf.o \
 		graphics.o \
 		create.o \
 		util.o \
-		parser.o
+		parser.o \
+		loop.o \
+		color.o
 
 all : compile
 
@@ -34,7 +38,7 @@ $(NAME) :
 			gcc -c $(SRC_C)
 
 compile : $(NAME)
-			gcc -g -fsanitize=address -lmlx -framework OpenGL -framework AppKit $(SRC_O) libft/libft.a -o $(NAME)
+			gcc -lmlx -framework OpenGL -framework AppKit $(SRC_O) libft/libft.a -o $(NAME)
 
 clean :
 			rm -rf $(SRC_O)

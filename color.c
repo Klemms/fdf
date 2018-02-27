@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/09 21:49:18 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/26 03:35:51 by cababou          ###   ########.fr       */
+/*   Created: 2018/02/26 04:31:52 by cababou           #+#    #+#             */
+/*   Updated: 2018/02/26 04:33:32 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_point	*new_point(int x, int y, int z)
+int		rgba_to_int(int r, int g, int b, int a)
 {
-	t_point	*point;
-
-	point = malloc(sizeof(t_point));
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	return (point);
+	return ((a & 0xff) << 24 | (r & 0xff) << 16 | (g & 0xff) << 8 | (b & 0xff));
 }

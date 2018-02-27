@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/09 21:49:18 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/26 03:35:51 by cababou          ###   ########.fr       */
+/*   Created: 2018/02/26 03:14:03 by cababou           #+#    #+#             */
+/*   Updated: 2018/02/26 03:17:53 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-t_point	*new_point(int x, int y, int z)
+# include "fdf.h"
+
+typedef struct	s_parser_number
 {
-	t_point	*point;
+	int			read_number;
+	int			read_characters;
+}				t_parser_number;
 
-	point = malloc(sizeof(t_point));
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	return (point);
-}
+#endif

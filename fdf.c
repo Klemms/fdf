@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 21:54:50 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/16 06:47:56 by cababou          ###   ########.fr       */
+/*   Updated: 2018/02/26 04:21:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	exit_program(int errortype)
 
 int		main(int argc, char **argv)
 {
-	void		*mlx;
-	t_window	*fdf_window;
+	void			*mlx;
+	t_window		*fdf_window;
+	t_loop_params	*loop_params;
 
 	mlx = init_graphics();
 	fdf_window = create_window_struct(1366, 768, "FdF - cababou");
@@ -33,7 +34,10 @@ int		main(int argc, char **argv)
 	{
 		init_window(mlx, &fdf_window);
 	}
-	parse_file(argv[1]);
+	loop_params = malloc(sizeof(t_loop_params));
+	loop_params->mlx = mlx;
+	loop_params->fdf_window = fdf_window;
+	mlx_loop_hook(mlx, loop, loop_params);
 	mlx_loop(mlx);
 	return (0);
 }
