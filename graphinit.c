@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 21:56:22 by cababou           #+#    #+#             */
-/*   Updated: 2018/02/09 22:06:30 by cababou          ###   ########.fr       */
+/*   Updated: 2018/07/10 00:40:18 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void	*init_graphics(void)
 	return (mlx);
 }
 
-void	init_window(void *mlx, t_window **window)
+void	init_window(void *mlx, t_window *window)
 {
-	(*window)->window = mlx_new_window(
+	window->window = mlx_new_window(
 		mlx,
-		(*window)->width,
-		(*window)->height,
-		(*window)->title);
+		window->width,
+		window->height,
+		window->title);
+	init_tabs(window);
 }
