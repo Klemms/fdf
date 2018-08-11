@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create.c                                           :+:      :+:    :+:   */
+/*   text.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/08 23:04:16 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 03:15:40 by cababou          ###   ########.fr       */
+/*   Created: 2018/07/22 00:44:33 by cababou           #+#    #+#             */
+/*   Updated: 2018/07/22 00:45:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_window	*create_window_struct(int width, int height, char *title)
+int		textsize(char *text)
 {
-	t_window	*window;
-
-	if ((window = malloc(sizeof(t_window))) == NULL)
-		exit_program(1);
-	window->width = width;
-	window->height = height;
-	window->title = title;
-	window->last_x = 0;
-	window->last_y = 0;
-	window->left_click_pressed = 0;
-	return (window);
+	return (ft_strlen(text) * 10);
 }

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 21:56:22 by cababou           #+#    #+#             */
-/*   Updated: 2018/07/10 00:40:18 by cababou          ###   ########.fr       */
+/*   Updated: 2018/07/26 20:55:49 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,4 @@ void	init_window(void *mlx, t_window *window)
 		window->width,
 		window->height,
 		window->title);
-	init_tabs(window);
 }

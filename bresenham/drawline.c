@@ -6,47 +6,49 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 12:17:02 by cababou           #+#    #+#             */
-/*   Updated: 2018/07/09 23:49:56 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/11 04:43:12 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 #include "drawline.h"
 
-void	extension_1(t_loop_params *params, t_line *l)
+void			extension_1(t_params *p, t_line *l)
 {
+	mlx_pixel_put(p->mlx, p->fdf_window->window, l->p2->x, l->p2->y, l->color);
 	if (l->dx > 0)
 	{
 		if ((l->dy = l->p2->y - l->p1->y))
 		{
 			if (l->dy > 0)
-				q1(params, l);
+				q1(p, l);
 			else
-				q2(params, l);
+				q2(p, l);
 		}
 		else
-			l1(params, l);
+			l1(p, l);
 	}
 	else
 	{
 		if ((l->dy = l->p2->y - l->y) != 0)
 		{
 			if (l->dy > 0)
-				q3(params, l);
+				q3(p, l);
 			else
-				q4(params, l);
+				q4(p, l);
 		}
 		else
-			l2(params, l);
+			l2(p, l);
 	}
 }
 
-void	line(t_loop_params *params, t_point *p1, t_point *p2, int color)
+t_lstcontainer	*line(t_params *params, t_point *p1, t_point *p2, int color)
 {
 	t_line	*l;
 
 	if ((l = malloc(sizeof(t_line))) == NULL)
 		exit_program(1);
+	lstcontainer_add(l->pixels, new_pixel(p1->x, p1->y, color));
 	l->color = color;
 	l->p1 = p1;
 	l->p2 = p2;

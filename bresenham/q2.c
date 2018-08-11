@@ -6,14 +6,14 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 22:57:59 by cababou           #+#    #+#             */
-/*   Updated: 2018/07/09 23:50:05 by cababou          ###   ########.fr       */
+/*   Updated: 2018/07/26 14:09:22 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 #include "drawline.h"
 
-void	o3(t_loop_params *params, t_line *l)
+void	o3(t_params *params, t_line *l)
 {
 	l->e = l->dx;
 	l->dx = l->e * 2;
@@ -32,7 +32,7 @@ void	o3(t_loop_params *params, t_line *l)
 	}
 }
 
-void	o4(t_loop_params *params, t_line *l)
+void	o4(t_params *params, t_line *l)
 {
 	l->e = l->dy;
 	l->dy = l->e * 2;
@@ -51,7 +51,7 @@ void	o4(t_loop_params *params, t_line *l)
 	}
 }
 
-void	q2(t_loop_params *params, t_line *l)
+void	q2(t_params *params, t_line *l)
 {
 	if (l->dx >= -l->dy)
 	{

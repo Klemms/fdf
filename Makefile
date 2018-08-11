@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 22:06:43 by cababou           #+#    #+#              #
-#    Updated: 2018/07/10 00:42:10 by cababou          ###   ########.fr        #
+#    Updated: 2018/08/11 02:49:22 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,22 @@ SRC =	./fdf.c \
 		./parser.c \
 		./hooks.c \
 		./color.c \
+		./text.c \
+		./util_nb.c \
+		./ui/button.c \
 		./bresenham/drawline.c \
 		./bresenham/q1.c \
 		./bresenham/q2.c \
 		./bresenham/q3.c \
 		./bresenham/q4.c \
 		./bresenham/q5.c \
-		./tabs/tabs.c
+		./tabs/tabs.c \
+		./tabs/tabs_init.c \
+		./tabs/rendering.c \
+		./map_rendering/renderer.c \
+		./map_rendering/formatter.c \
+		./map_rendering/conversion.c \
+		./map_rendering/rotations.c
 	
 OBJ = $(SRC:.c=.o)
 

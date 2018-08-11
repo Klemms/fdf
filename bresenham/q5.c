@@ -6,14 +6,14 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 23:40:57 by cababou           #+#    #+#             */
-/*   Updated: 2018/07/09 23:50:14 by cababou          ###   ########.fr       */
+/*   Updated: 2018/07/26 14:09:37 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 #include "drawline.h"
 
-void	l1(t_loop_params *params, t_line *l)
+void	l1(t_params *params, t_line *l)
 {
 	while ((l->x = l->x + 1) != l->p2->x)
 	{
@@ -22,7 +22,7 @@ void	l1(t_loop_params *params, t_line *l)
 	}
 }
 
-void	l2(t_loop_params *params, t_line *l)
+void	l2(t_params *params, t_line *l)
 {
 	while ((l->x = l->x - 1) != l->p2->x)
 	{
@@ -31,7 +31,7 @@ void	l2(t_loop_params *params, t_line *l)
 	}
 }
 
-void	l3(t_loop_params *params, t_line *l)
+void	l3(t_params *params, t_line *l)
 {
 	while ((l->y = l->y + 1) != l->p2->y)
 	{
@@ -40,7 +40,7 @@ void	l3(t_loop_params *params, t_line *l)
 	}
 }
 
-void	l4(t_loop_params *params, t_line *l)
+void	l4(t_params *params, t_line *l)
 {
 	while ((l->y = l->y - 1) != l->p2->y)
 	{
