@@ -6,11 +6,13 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 15:09:55 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 02:42:34 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 05:08:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+#include <time.h>
 
 int		get_color_height(t_point *point)
 {
@@ -41,16 +43,27 @@ void	render_map(t_params *p, t_tab *tab, int render_type)
 {
 	t_list			*element;
 	t_dline			*dl;
-	t_lstcontainer	*lines;
 	t_map_settings	*ms;
+	t_image			*image;
+	t_mlx_img		*mlx_img;
 
-	lines = make_lines(p, tab->point_list);
-	element = lines->firstelement;
+	
+
+
+	element = tab->lines->firstelement;
 	ms = tab->map_settings;
+	tab->map_image = mlx_new_image(p->mlx, p->fdf_window->width, p->fdf_window->height - 65);
+	mlx_img = new_mlx_img();
+	image = new_image(p->fdf_window->width, p->fdf_window->height - 65,
+		(int *)mlx_get_data_addr(tab->map_image, &mlx_img->bits_per_pixel,
+		&mlx_img->size_line, &mlx_img->endian));
+
+	
+	/*clock_t start = clock(), diff;*/
 	while (element)
 	{
 		dl = (t_dline *)element->content;
-		line(p,
+		line(p, image,
 		add_fpt(two_d_to_three_d(rotate(
 		new_fpt((dl->start->x - ms->max_x / 2) * ms->size,
 			(dl->start->y - ms->max_y / 2) * ms->size,
@@ -64,4 +77,16 @@ void	render_map(t_params *p, t_tab *tab, int render_type)
 		get_color_height(dl->end));
 		element = element->next;
 	}
+	/*diff = clock() - start;
+	long msec = diff * 1000000 / CLOCKS_PER_SEC;
+	printf("Time taken %lu\n", msec);
+	fflush(stdout);*/
+
+	mlx_put_image_to_window(p->mlx, p->fdf_window->window, tab->map_image, 0, 65);
+	destroy_image(p, tab->map_image, image);
+
+	/*free(dl->start);
+	free(dl->end);
+	free(dl);*/
+
 }

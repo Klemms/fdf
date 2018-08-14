@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 16:09:01 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/05 23:07:25 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 04:55:47 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@ t_point	*two_d_to_iso(t_point *point, int factor)
 
 t_point	*two_d_to_three_d(t_point *point, int angle_1, int angle_2)
 {
-	return (new_fpt((cosl(to_radians(angle_1)) * point->x) - (sinl(to_radians(angle_1)) * point->y),
+	int x;
+	int y;
+
+	x = point->x;
+	y = point->y;
+	point->x = (cos(to_radians(angle_1)) * x) - (sin(to_radians(angle_1)) * y);
+	point->y = ((-sin(to_radians(angle_1))) * sin(to_radians(angle_2)) * x) - (cos(to_radians(angle_1)) * sin(to_radians(angle_2)) * y) + (cos(to_radians(angle_2)) * point->z);
+	return (point);
+	/*return (new_fpt((cosl(to_radians(angle_1)) * point->x) - (sinl(to_radians(angle_1)) * point->y),
 		((-sinl(to_radians(angle_1))) * sinl(to_radians(angle_2)) * point->x) - (cosl(to_radians(angle_1)) * sinl(to_radians(angle_2))
-		* point->y) + (cosl(to_radians(angle_2)) * point->z), point->z));
+		* point->y) + (cosl(to_radians(angle_2)) * point->z), point->z));*/
 }
 
 t_point	*two_d_to_three_d_2(t_point *point, int angle_1)

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 15:34:57 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:40:55 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 05:30:45 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_lstcontainer	*base_lines(t_params *p, t_lstcontainer *points)
 t_lstcontainer	*make_lines(t_params *p, t_lstcontainer *points)
 {
 	t_lstcontainer	*lines;
+	t_list			*element;
 	int				max_x;
 	int				i;
 	int				size;
@@ -91,12 +92,14 @@ t_lstcontainer	*make_lines(t_params *p, t_lstcontainer *points)
 	max_x = file_max_x(points);
 	i = 0;
 	size = lstcontainer_size(points);
+	element = points->firstelement;
 	while (i < size - max_x - 1)
 	{
 		lstcontainer_add(lines, new_line(
-			(t_point *)ft_lstget(i, points->firstelement)->content,
-			(t_point *)ft_lstget(i + max_x + 1,
-				points->firstelement)->content));
+			(t_point *)element->content,
+			(t_point *)ft_lstget_fromelement(i + max_x + 1,
+				element)->content));
+		element = element->next;
 		i++;
 	}
 	return (lines);

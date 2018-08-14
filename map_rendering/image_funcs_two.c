@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create.c                                           :+:      :+:    :+:   */
+/*   image_funcs_two.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/08 23:04:16 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/13 05:55:52 by cababou          ###   ########.fr       */
+/*   Created: 2018/08/12 02:54:26 by cababou           #+#    #+#             */
+/*   Updated: 2018/08/14 04:20:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
-t_window	*create_window_struct(int width, int height, char *title)
+void	destroy_image(t_params *p, void *image, t_image *img)
 {
-	t_window	*window;
-
-	if ((window = malloc(sizeof(t_window))) == NULL)
-		exit_program(1);
-	window->width = width;
-	window->height = height;
-	window->size = new_pt(width, height);
-	window->title = title;
-	window->last_x = 0;
-	window->last_y = 0;
-	window->left_click_pressed = 0;
-	return (window);
+	mlx_destroy_image(p->mlx, image);
+	free(img);
 }

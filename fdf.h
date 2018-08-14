@@ -6,14 +6,14 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 22:00:07 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:42:06 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 04:39:33 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# define READ_BUF_SIZE 64
+# define READ_BUF_SIZE 4096
 
 # include <mlx.h>
 # include <Tk/X11/X.h>
@@ -51,9 +51,17 @@ typedef struct		s_dline
 
 typedef struct		s_pixel
 {
-	t_point			*point;
+	int				x;
+	int				y;
 	int				color;
 }					t_pixel;
+
+typedef struct		s_image
+{
+	int				width;
+	int				height;
+	int				*image;
+}					t_image;
 
 typedef struct		s_mlx_img
 {
@@ -108,6 +116,8 @@ typedef struct		s_tab
 	t_map_settings	*map_settings;
 	int				menu_linked_button;
 	void			*black_background;
+	void			*map_image;
+	t_lstcontainer	*lines;
 }					t_tab;
 
 typedef struct		s_tabs
@@ -120,6 +130,7 @@ typedef struct		s_tabs
 typedef struct		s_window
 {
 	void			*window;
+	t_point			*size;
 	int				width;
 	int				height;
 	char			*title;
@@ -168,7 +179,8 @@ t_dline				*new_line(t_point *start, t_point *end);
 
 int					rgba_to_int(int r, int g, int b, int a);
 
-t_lstcontainer		*line(t_params *p, t_point *p_1, t_point *p_2, int c);
+void				line(t_params *p, t_image *img,
+					t_point *p_1, t_point *p_2, int c);
 
 void				init_tabs(t_params *params, int argc, char **argv);
 
@@ -233,6 +245,18 @@ int					mouse_pressed(int button, int x, int y, t_params *p);
 
 int					mouse_released(int button, int x, int y, t_params *p);
 
-t_pixel				*new_pixel(int x, int y, int color);
+t_pixel				*new_pxl(int x, int y, int color);
+
+int					pxl_width(t_lstcontainer *pixels);
+
+int					pxl_height(t_lstcontainer *pixels);
+
+void				wrt_pxl(t_image *img, int x, int y, int color);
+
+t_image				*new_image(int width, int height, int *img);
+
+t_mlx_img			*new_mlx_img(void);
+
+void				destroy_image(t_params *p, void *image, t_image *img);
 
 #endif

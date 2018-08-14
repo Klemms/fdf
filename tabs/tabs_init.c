@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/11 02:44:56 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:40:42 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 05:30:54 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	init_tabs(t_params *p, int argc, char **argv)
 		tab->size = new_pt(p->fdf_window->width, p->fdf_window->height - 65);
 		tab->black_background = fill_img(p, new_pt(p->fdf_window->width,
 			p->fdf_window->height - 65), rgba_to_int(25, 25, 25, 0));
+		tab->map_image = NULL;
+		tab->lines = make_lines(p, tab->point_list);
 		if ((tab->buttons = lstcontainer_new()) == NULL)
 			exit_program(1);
 		lstcontainer_add(p->fdf_window->tabs->tab_list, tab);

@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 23:29:48 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:43:43 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/12 02:36:50 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_lstcontainer	*parse_file(char *filepath)
 	t_lstcontainer	*pointlist;
 	t_parser_number	*number;
 
+	pointlist = lstcontainer_new();
 	content = read_file(filepath);
 	i = 0;
 	xz = malloc(sizeof(int *) * 2);

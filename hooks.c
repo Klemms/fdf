@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 04:22:34 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:20:12 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 05:15:31 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,17 @@ int		loop(t_params *p)
 
 int		mouse_clicked(int button, int x, int y, t_params *p)
 {
-	if (button == 4)
-		zoom_map(p, 1);
-	if (button == 5)
-		zoom_map(p, -1);
-	button_clicked(button, x, y, p);
 	return (0);
 }
 
 int		mouse_pressed(int button, int x, int y, t_params *p)
 {
+	if (button == 4)
+		zoom_map(p, 1);
+	if (button == 5)
+		zoom_map(p, -1);
+	printf("PRESS + %d\n", button);
+	fflush(stdout);
 	if (button == 1 && x > 0 && x < p->fdf_window->width && y > 0 && y < p->fdf_window->height)
 		p->fdf_window->left_click_pressed = 1;
 	return (0);
@@ -48,8 +49,11 @@ int		mouse_pressed(int button, int x, int y, t_params *p)
 
 int		mouse_released(int button, int x, int y, t_params *p)
 {
+	printf("RELEASE + %d\n", button);
+	fflush(stdout);
 	if (button == 1)
 		p->fdf_window->left_click_pressed = 0;
+	button_clicked(button, x, y, p);
 	return (0);
 }
 

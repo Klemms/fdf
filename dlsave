@@ -1,0 +1,227 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    dlsave                                             :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/03/15 12:17:02 by cababou           #+#    #+#              #
+#    Updated: 2018/07/09 22:56:10 by cababou          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "fdf.h"
+#include "drawline.h"
+
+void	line(t_loop_params *params, t_point *p1, t_point *p2, int color)
+{
+	t_line	*l;
+
+	if ((l = malloc(sizeof(t_line))) == NULL)
+		exit_program(1);
+	l->color = color;
+	l->p1 = p1;
+	l->p2 = p2;
+	l->e = l->p2->x - l->p1->x;
+	l->dx = l->e * 2;
+	l->dy = (l->p2->y - l->p1->y) * 2;
+	l->x = l->p1->x;
+	l->y = l->p1->y;
+	if ((dx = p2->x - p1->x) != 0)
+	{
+		if (dx > 0)
+		{
+			if ((dy = p2->y - p1->y))
+			{
+				if (dy > 0)
+				{
+					if (dx >= dy)
+					{
+						e = dx;
+						dx = e * 2;
+						dy = dy * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((x = x + 1) == p2->x)
+								break ;
+							if ((e = e - dy) <= 0)
+							{
+								y = y + 1;
+								e = e + dx;
+							}
+						}
+					}
+					else
+					{
+						e = dy;
+						dy = e * 2;
+						dx = dx * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((y = y + 1) == p2->y)
+								break ;
+							if ((e = e - dx) <= 0)
+							{
+								x = x + 1;
+								e = e + dy;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (dx >= -dy)
+					{
+						e = dx;
+						dx = e * 2;
+						dy = dy * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((x = x + 1) == p2->x)
+								break ;
+							if ((e = e + dy) < 0)
+							{
+								y = y - 1;
+								e = e + dx;
+							}
+						}
+					}
+					else
+					{
+						e = dy;
+						dy = e * 2;
+						dx = dx * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((y = y - 1) == p2->y)
+								break ;
+							if ((e = e + dx) > 0)
+							{
+								x = x + 1;
+								e = e + dy;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				while ((x = x + 1) != p2->x)
+				{
+					mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+				}
+			}
+		}
+		else
+		{
+			if ((dy = p2->y - y) != 0)
+			{
+				if (dy > 0)
+				{
+					if (-dx >= dy)
+					{
+						e = dx;
+						dx = e * 2;
+						dy = dy * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((x = x - 1) == p2->x)
+								break ;
+							if ((e = e + dy) >= 0)
+							{
+								y = y + 1;
+								e = e + dx;
+							}
+						}
+					}
+					else
+					{
+						e = dy;
+						dy = e * 2;
+						dx = dx * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((y = y + 1) == p2->y)
+								break ;
+							if ((e = e + dx) <= 0)
+							{
+								x = x - 1;
+								e = e + dy;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (dx <= dy)
+					{
+						e = dx;
+						dx = e * 2;
+						dy = dy * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((x = x - 1) == p2->x)
+								break ;
+							if ((e = e - dy) >= 0)
+							{
+								y = y - 1;
+								e = e + dx;
+							}
+						}
+					}
+					else
+					{
+						e = dy;
+						dy = e * 2;
+						dx = dx * 2;
+						while (1)
+						{
+							mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+							if ((y = y - 1) == p2->y)
+								break ;
+							if ((e = e - dx) >= 0)
+							{
+								x = x - 1;
+								e = e + dy;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				while ((x = x - 1) != p2->x)
+				{
+					mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+				}
+			}
+		}
+	}
+	else if (dx == 0)
+	{
+		if ((dy = p2->y - y) != 0)
+		{
+			if (dy > 0)
+			{
+				while ((y = y + 1) != p2->y)
+				{
+					mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+				}
+			}
+			else if (dy < 0)
+			{
+				while ((y = y - 1) != p2->y)
+				{
+					mlx_pixel_put(params->mlx, params->fdf_window->window, x, y, color);
+				}
+			}
+		}
+	}
+}

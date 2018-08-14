@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 22:06:43 by cababou           #+#    #+#              #
-#    Updated: 2018/08/11 02:49:22 by cababou          ###   ########.fr        #
+#    Updated: 2018/08/14 04:45:39 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRC =	./fdf.c \
 		./map_rendering/renderer.c \
 		./map_rendering/formatter.c \
 		./map_rendering/conversion.c \
-		./map_rendering/rotations.c
+		./map_rendering/rotations.c \
+		./map_rendering/image_funcs.c \
+		./map_rendering/image_funcs_two.c
 	
 OBJ = $(SRC:.c=.o)
 

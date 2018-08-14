@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 22:40:28 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:38:32 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/14 02:49:26 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct	s_line
 	int				y;
 	int				e;
 	int				color;
-	t_lstcontainer	*pixels;
+	t_image			*img;
 }				t_line;
 
 void			q1(t_params *params, t_line *l);

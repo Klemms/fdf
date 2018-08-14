@@ -6,19 +6,20 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 23:02:59 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/11 04:33:56 by cababou          ###   ########.fr       */
+/*   Updated: 2018/08/13 06:00:05 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_pixel	*new_pixel(int x, int y, int color)
+t_pixel	*new_pxl(int x, int y, int color)
 {
 	t_pixel	*pixel;
 
 	if ((pixel = malloc(sizeof(t_pixel *))) == NULL)
 		exit_program(1);
-	pixel->point = new_pt(x, y);
+	pixel->x = x;
+	pixel->y = y;
 	pixel->color = color;
 	return (pixel);
 }
