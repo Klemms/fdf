@@ -6,34 +6,34 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 02:54:26 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/14 04:39:25 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/03 03:13:51 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-t_mlx_img	*new_mlx_img(void)
+t_mlx_img	*new_mlx_img(t_params *p)
 {
 	t_mlx_img	*mlx_img;
 
-	if ((mlx_img = malloc(sizeof(t_mlx_img *))) == NULL)
-		exit_program(1);
+	if ((mlx_img = malloc(sizeof(t_mlx_img))) == NULL)
+		exit_program(p, 1);
 	return (mlx_img);
 }
 
-t_image		*new_image(int width, int height, int *img)
+t_image		*new_image(t_params *p, int width, int height, unsigned int *img)
 {
 	t_image	*image;
 
-	if ((image = malloc(sizeof(t_image *))) == NULL)
-		exit_program(1);
+	if ((image = malloc(sizeof(t_image))) == NULL)
+		exit_program(p, 1);
 	image->width = width;
 	image->height = height;
 	image->image = img;
 	return (image);
 }
 
-void		wrt_pxl(t_image *img, int x, int y, int color)
+void		write_pxl(t_image *img, int x, int y, int color)
 {
 	if (x > 0 && x < img->width && y > 0 && y < img->height)
 		img->image[x + img->width * y] = color;

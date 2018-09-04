@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 15:00:35 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/05 02:58:36 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/03 03:15:22 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	render_tab(t_params *p, t_tab *tab)
 		render_button(p, button);
 		element = element->next;
 	}
-	render_map(p, tab, 0);
+	render_map(p, tab);
 }
 
 void	hide_tab(t_params *p, t_tab *tab)
@@ -40,6 +40,5 @@ void	hide_tab(t_params *p, t_tab *tab)
 		button->is_visible = 0;
 		element = element->next;
 	}
-	mlx_put_image_to_window(p->mlx, p->fdf_window->window,
-		tab->black_background, 0, 65);
+	(void)p;
 }

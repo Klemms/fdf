@@ -6,7 +6,7 @@
 #    By: cababou <cababou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/06 22:06:43 by cababou           #+#    #+#              #
-#    Updated: 2018/08/14 04:45:39 by cababou          ###   ########.fr        #
+#    Updated: 2018/09/04 03:19:45 by cababou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ SRC =	./fdf.c \
 		./util.c \
 		./parser.c \
 		./hooks.c \
-		./color.c \
 		./text.c \
 		./util_nb.c \
+		./events.c \
+		./optimization.c \
 		./ui/button.c \
 		./bresenham/drawline.c \
 		./bresenham/q1.c \
@@ -38,22 +39,24 @@ SRC =	./fdf.c \
 		./map_rendering/conversion.c \
 		./map_rendering/rotations.c \
 		./map_rendering/image_funcs.c \
-		./map_rendering/image_funcs_two.c
+		./map_rendering/image_funcs_two.c \
+		./map_rendering/colors.c \
+		./get_next_line.c
 	
 OBJ = $(SRC:.c=.o)
 
 LIB = ./libft
 
-FLAG = -lmlx -framework OpenGL -framework AppKit
+FLAG = -lmlx -framework OpenGL -framework AppKit -Wall -Wextra -Werror
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
 			make -C $(LIB)
-			gcc $(FLAG) $(OBJ) ./libft/libft.a -o $(NAME)
+			gcc -o3 $(FLAG) $(OBJ) ./libft/libft.a -o $(NAME)
 
 %.o: %.c
-			gcc -c $(FLAG) $< -o $@ 
+			gcc -o3 -c -Wall -Wextra -Werror $< -o $@ 
 
 clean :
 			rm -rf $(OBJ)

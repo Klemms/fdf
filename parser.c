@@ -6,80 +6,120 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/13 23:29:48 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/12 02:36:50 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/04 04:21:23 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "fdf.h"
 
-char			*read_file(char *filepath)
+int				is_file_valid_2(t_lstcontainer *points, t_list *tmp, int x)
 {
-	char	*content;
-	char	*buf;
-	size_t	readbytes;
-	int		fd;
+	int		last_x;
 
-	content = ft_strnew(0);
-	buf = ft_strnew(READ_BUF_SIZE);
+	last_x = -1;
+	while (tmp)
+	{
+		if (((t_point *)tmp->content)->x > x ||
+		(last_x < x && ((t_point *)tmp->content)->x <= last_x))
+			return (0);
+		last_x = ((t_point *)tmp->content)->x;
+		if (((t_point *)tmp->content)->x != x && tmp == points->lastelement)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+int				is_file_valid(t_lstcontainer *points)
+{
+	int		x;
+	t_list	*tmp;
+
+	if (points == NULL || points->firstelement == NULL)
+		return (0);
+	x = -1;
+	tmp = points->firstelement;
+	while (tmp && ((t_point *)tmp->content)->x > x)
+	{
+		x = ((t_point *)tmp->content)->x;
+		tmp = tmp->next;
+	}
+	if (x == 0)
+		return (1);
+	tmp = points->firstelement;
+	return (is_file_valid_2(points, tmp, x));
+}
+
+t_point			*add_color(t_point *p, int color)
+{
+	p->color = color;
+	return (p);
+}
+
+void			handle_open_error(t_params *p, char *fp, t_lstcontainer *points)
+{
+	ft_lstdel(points->firstelement, 1);
+	free(points);
+	if (errno == EACCES || errno == EFAULT)
+	{
+		ft_putstr("Couldn't open a file, missing permissions. (");
+		ft_putstr(fp);
+		ft_putendl(")");
+	}
+	else
+	{
+		ft_putstr("Couldn't open a file. (");
+		ft_putstr(fp);
+		ft_putendl(")");
+	}
+	exit_program(p, 0);
+}
+
+t_lstcontainer	*parse_file(t_params *p, char *filepath)
+{
+	t_lstcontainer	*points;
+	int				fd;
+	t_point			*pt;
+	char			*tmp;
+	t_lstcontainer	*l;
+
+	if ((points = lstcontainer_new()) == NULL)
+		exit_program(p, 1);
 	fd = open(filepath, O_RDONLY);
 	if (fd < 0)
-		return (NULL);
-	while ((readbytes = read(fd, buf, READ_BUF_SIZE)) > 0)
-		content = ft_strjoin(content, ft_strsub(buf, 0, readbytes, 0), 3);
-	return (content);
-}
-
-t_parser_number	*get_next_number(char *content, int startpoint)
-{
-	char			*buf;
-	t_parser_number	*number;
-	size_t			i;
-
-	number = malloc(sizeof(t_parser_number));
-	number->read_characters = 0;
-	i = startpoint;
-	buf = ft_strnew(0);
-	while (content[i] == ' ' || content[i] == '\n')
+		handle_open_error(p, filepath, points);
+	tmp = NULL;
+	pt = new_pt(p, 0, 0);
+	while ((pt->z = get_next_line(fd, &tmp)) == 1)
 	{
-		number->read_characters++;
-		i++;
-	}
-	while (content[i] != ' ' && content[i] != '\0' && content[i] != '\n')
-	{
-		buf = ft_strjoin(buf, ft_strsub(content, i, 1, 0), 3);
-		number->read_characters++;
-		i++;
-	}
-	number->read_number = ft_atoi(buf);
-	return (number);
-}
-
-t_lstcontainer	*parse_file(char *filepath)
-{
-	char			*content;
-	size_t			i;
-	int				*xz;
-	t_lstcontainer	*pointlist;
-	t_parser_number	*number;
-
-	pointlist = lstcontainer_new();
-	content = read_file(filepath);
-	i = 0;
-	xz = malloc(sizeof(int *) * 2);
-	xz[0] = 0;
-	xz[1] = 0;
-	while (content[i] && content[i + 1])
-	{
-		number = get_next_number(content, i);
-		i += number->read_characters;
-		pointlist->add(pointlist, new_fpt(xz[0], xz[1], number->read_number));
-		xz[0] += 1;
-		if (content[i] == '\n')
+		pt->x = 0;
+		if ((l = ft_strsplit_lst(tmp, ' ', '\n', '\0')) == NULL)
+			exit_program(p, 1);
+		while (pt->x < lstcontainer_fastsize(l))
 		{
-			xz[0] = 0;
-			xz[1] += 1;
+			lstcontainer_add(points, new_fpt(p, pt->x, pt->y,
+			ft_atoi((char *)ft_lstget(pt->x, l->firstelement)->content)));
+			((t_point *)points->lastelement->content)->color =
+			ft_hex_to_color(
+			ft_strsplitone(ft_lstget(pt->x, l->firstelement)->content, ',', 1), 1);
+			if (((t_point *)points->lastelement->content)->color == 0)
+				((t_point *)points->lastelement->content)->color = rgba_to_int(200, 100, 100, 0);
+			pt->x++;
 		}
+		ft_lstdel(l->firstelement, 1);
+		if (lstcontainer_fastsize(l) > 0)
+			pt->y++;
+		free(l);
+		free(tmp);
+		tmp = NULL;
 	}
-	free(xz);
-	return (pointlist);
+	if (pt->z == -1)
+	{
+		ft_putstr("Couldn't read a file. (");
+		ft_putstr(filepath);
+		ft_putendl(")");
+		exit_program(p, 0);
+	}
+	free(pt);
+	return (points);
 }

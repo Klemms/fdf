@@ -6,21 +6,30 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 22:57:59 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/14 04:40:42 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/04 04:19:16 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 #include "drawline.h"
 
-void	o3(t_params *p, t_line *l)
+static inline void	wrt_pxl(t_image *img, int x, int y, int color)
+{
+	if (x > 0 && x < img->width && y > 0 && y < img->height)
+		img->image[x + img->width * y] = color;
+}
+
+void	o3(t_line *l)
 {
 	l->e = l->dx;
-	l->dx = l->e * 2;
-	l->dy = l->dy * 2;
+	l->dx = l->e + l->e;
+	l->dy = l->dy + l->dy;
 	while (1)
 	{
-		wrt_pxl(l->img, l->x, l->y, l->color);
+		//wrt_pxl(l->img, l->x, l->y, l->color);
+		wrt_pxl(l->img, l->x, l->y,
+		calc_gradient(l->p1->color, l->p2->color,
+		((double)(l->x - l->p1->x)) / ((double)(l->p2->x - l->p1->x))));
 		if ((l->x = l->x + 1) == l->p2->x)
 			break ;
 		if ((l->e = l->e + l->dy) < 0)
@@ -31,14 +40,17 @@ void	o3(t_params *p, t_line *l)
 	}
 }
 
-void	o4(t_params *p, t_line *l)
+void	o4(t_line *l)
 {
 	l->e = l->dy;
-	l->dy = l->e * 2;
-	l->dx = l->dx * 2;
+	l->dy = l->e + l->e;
+	l->dx = l->dx + l->dx;
 	while (1)
 	{
-		wrt_pxl(l->img, l->x, l->y, l->color);
+		//wrt_pxl(l->img, l->x, l->y, l->color);
+		wrt_pxl(l->img, l->x, l->y,
+		calc_gradient(l->p1->color, l->p2->color,
+		((double)(l->y - l->p1->y)) / ((double)(l->p2->y - l->p1->y))));
 		if ((l->y = l->y - 1) == l->p2->y)
 			break ;
 		if ((l->e = l->e + l->dx) > 0)
@@ -49,14 +61,14 @@ void	o4(t_params *p, t_line *l)
 	}
 }
 
-void	q2(t_params *params, t_line *l)
+void	q2(t_line *l)
 {
 	if (l->dx >= -l->dy)
 	{
-		o3(params, l);
+		o3(l);
 	}
 	else
 	{
-		o4(params, l);
+		o4(l);
 	}
 }

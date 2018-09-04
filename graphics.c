@@ -6,18 +6,18 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 23:02:59 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/13 06:00:05 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/02 00:10:55 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_pixel	*new_pxl(int x, int y, int color)
+t_pixel	*new_pxl(t_params *p, int x, int y, int color)
 {
 	t_pixel	*pixel;
 
-	if ((pixel = malloc(sizeof(t_pixel *))) == NULL)
-		exit_program(1);
+	if ((pixel = malloc(sizeof(t_pixel))) == NULL)
+		exit_program(p, 1);
 	pixel->x = x;
 	pixel->y = y;
 	pixel->color = color;
@@ -72,7 +72,7 @@ void	*fill_img(t_params *p, t_point *wh, int c)
 	t_mlx_img	*img;
 
 	if ((img = malloc(sizeof(t_mlx_img))) == NULL)
-		exit_program(1);
+		exit_program(p, 1);
 	image = mlx_new_image(p->mlx, wh->x, wh->y);
 	pixels = (int *)mlx_get_data_addr(image, &img->bits_per_pixel,
 		&img->size_line, &img->endian);

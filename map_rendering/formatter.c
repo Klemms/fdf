@@ -6,7 +6,7 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 15:34:57 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/14 05:30:45 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/03 01:39:50 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_lstcontainer	*base_lines(t_params *p, t_lstcontainer *points)
 	t_point			*current_point;
 
 	if ((lines = lstcontainer_new()) == NULL)
-		exit_program(0);
+		exit_program(p, 0);
 	point = points->firstelement;
 	last_point = NULL;
 	while (point)
@@ -72,7 +72,7 @@ t_lstcontainer	*base_lines(t_params *p, t_lstcontainer *points)
 		{
 			if (current_point->y == last_point->y)
 				lstcontainer_add(lines,
-					new_line(last_point, current_point));
+					new_line(p, last_point, current_point));
 		}
 		last_point = current_point;
 		point = point->next;
@@ -95,7 +95,7 @@ t_lstcontainer	*make_lines(t_params *p, t_lstcontainer *points)
 	element = points->firstelement;
 	while (i < size - max_x - 1)
 	{
-		lstcontainer_add(lines, new_line(
+		lstcontainer_add(lines, new_line(p,
 			(t_point *)element->content,
 			(t_point *)ft_lstget_fromelement(i + max_x + 1,
 				element)->content));

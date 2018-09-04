@@ -6,25 +6,33 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 21:56:22 by cababou           #+#    #+#             */
-/*   Updated: 2018/07/26 20:55:49 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/02 00:07:19 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	*init_graphics(void)
+int		redraw(t_params *p)
+{
+	(void) p;
+	return (1);
+}
+
+void	*init_graphics(t_params *p)
 {
 	void	*mlx;
 
-	mlx = mlx_init();
+	if ((mlx = mlx_init()) == NULL)
+		exit_program(p, 2);
 	return (mlx);
 }
 
-void	init_window(void *mlx, t_window *window)
+void	init_window(t_params *p, void *mlx, t_window *window)
 {
-	window->window = mlx_new_window(
+	if ((window->window = mlx_new_window(
 		mlx,
 		window->width,
 		window->height,
-		window->title);
+		window->title)) == NULL)
+		exit_program(p, 3);
 }

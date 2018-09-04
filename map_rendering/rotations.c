@@ -6,55 +6,56 @@
 /*   By: cababou <cababou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/05 22:58:58 by cababou           #+#    #+#             */
-/*   Updated: 2018/08/14 04:58:19 by cababou          ###   ########.fr       */
+/*   Updated: 2018/09/01 06:48:02 by cababou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-t_point	*rotate(t_point *point, int x_rot, int y_rot, int z_rot)
+t_point	*rotate(t_params *p, t_point *point, t_point *rot)
 {
-	return (z_rotation(y_rotation(x_rotation(point, x_rot), y_rot), z_rot));
+	return (
+		z_rotation(p,
+		y_rotation(p,
+		x_rotation(p, point, rot->x), rot->y), rot->z));
 }
 
-t_point	*x_rotation(t_point *point, int angle)
+int	constrain_angle(int x)
+{
+	if (x >= 0 && x < 360)
+		return (x);
+	x = fmod(x, 359);
+	if (x < 0)
+		x += 359;
+	return (x);
+}
+
+t_point	*x_rotation(t_params *p, t_point *point, int angle)
 {
 	int y;
 
 	y = point->y;
-	point->y = y * cos(to_radians(angle)) - point->z * sin(to_radians(angle));
-	point->z = y * sin(to_radians(angle)) + point->z * cos(to_radians(angle));
+	point->y = y * p->fdf_window->cos_table[constrain_angle(angle)] - point->z * p->fdf_window->sin_table[constrain_angle(angle)];
+	point->z = y * p->fdf_window->sin_table[constrain_angle(angle)] + point->z * p->fdf_window->cos_table[constrain_angle(angle)];
 	return (point);
-	/*return (new_fpt(
-		point->x,
-		point->y * cos(to_radians(angle)) - point->z * sin(to_radians(angle)),
-		point->y * sin(to_radians(angle)) + point->z * cos(to_radians(angle))));*/
 }
 
-t_point	*y_rotation(t_point *point, int angle)
+t_point	*y_rotation(t_params *p, t_point *point, int angle)
 {
 	int x;
 
 	x = point->x;
-	point->x = point->z * sin(to_radians(angle)) + x * cos(to_radians(angle));
-	point->z = point->z * cos(to_radians(angle)) - x * sin(to_radians(angle));
+	point->x = point->z * p->fdf_window->sin_table[constrain_angle(angle)] + x * p->fdf_window->cos_table[constrain_angle(angle)];
+	point->z = point->z * p->fdf_window->cos_table[constrain_angle(angle)] - x * p->fdf_window->sin_table[constrain_angle(angle)];
 	return (point);
-	/*return (new_fpt(
-		point->z * sin(to_radians(angle)) + point->x * cos(to_radians(angle)),
-		point->y,
-		point->z * cos(to_radians(angle)) - point->x * sin(to_radians(angle))));*/
 }
 
-t_point	*z_rotation(t_point *point, int angle)
+t_point	*z_rotation(t_params *p, t_point *point, int angle)
 {
 	int x;
 
 	x = point->x;
-	point->x = x * cos(to_radians(angle)) - point->y * sin(to_radians(angle));
-	point->y = x * sin(to_radians(angle)) + point->y * sin(to_radians(angle));
+	point->x = x * p->fdf_window->cos_table[constrain_angle(angle)] - point->y * p->fdf_window->sin_table[constrain_angle(angle)];
+	point->y = x * p->fdf_window->sin_table[constrain_angle(angle)] + point->y * p->fdf_window->sin_table[constrain_angle(angle)];
 	return (point);
-	/*return (new_fpt(
-		point->x * cos(to_radians(angle)) - point->y * sin(to_radians(angle)),
-		point->x * sin(to_radians(angle)) + point->y * sin(to_radians(angle)),
-		point->z));*/
 }
